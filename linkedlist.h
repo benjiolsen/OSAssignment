@@ -36,7 +36,7 @@ typedef struct
 LinkedList* makeEmpty();
 /* Inserts an item into the front of a linked list, doing the checking and
    possible shuffling needed */
-void insertFirst(LinkedList* list,int *inPid,char* inBurst);
+void insertFirst(LinkedList* list,int inPid,int inBurst);
 /* Acts to call the lengthRecurse module to recusively get the length of the
    list by traversing through it */
 int getLength(LinkedList* list);
@@ -51,7 +51,7 @@ void freeList(LinkedList* list);
 /* Recusively calls itself, freeing each node as it goes */
 void freeRecurse(ListNode* cur);
 /* Inserts the item at the tail of the list */
-void insertLast(LinkedList* list,char *inPid,char* inBurst);
+void insertLast(LinkedList* list,int inPid,int inBurst);
 /* Deletes the item at the tail of the list */
 void deleteLast(LinkedList* list);
 
