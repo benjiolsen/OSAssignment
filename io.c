@@ -27,7 +27,7 @@ int readLines(LinkedList* list,char* filename)
         {/* Attempts to read in the first line, if it cant, runs the else */
             do
             {
-                if(sscanf(buffer,"%*s%d %d",&burst,&pid)==2)
+                if(sscanf(buffer,"%d %d",&burst,&pid)==2)
                 {
                     insertLast(list,pid,burst);
                 }
