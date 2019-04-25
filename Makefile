@@ -13,6 +13,7 @@ GOUT= generator
 default: Scheduler Generator
 Generator: $(GOBJ)
 	$(CC) $(GOBJ) -o $(GOUT)
+	./generator
 $(GOBJ): generator.c
 	$(CC) $(CFLAGS) generator.c
 Scheduler: $(OBJ)
@@ -24,5 +25,5 @@ io.o: io.c io.h linkedlist.h scheduler.h
 linkedlist.o: linkedlist.c linkedlist.h
 	$(CC) $(CFLAGS) linkedlist.c
 clean:
-	rm *.o $(OUT) $(GOUT)
+	rm *.o $(OUT) $(GOUT) task_file
 	clear
