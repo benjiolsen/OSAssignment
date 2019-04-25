@@ -7,11 +7,11 @@ Purpose: To act as the file which contains all the functions to manipulate a
          use of the tail pointer and previous pointers.
 */
 /* Obtained from Benjamin Olsen (me), Previously submitted with the UCP structs
-   practical */
+   practical and the UCP 2018 Assignment*/
 #include "linkedlist.h"
 LinkedList* makeEmpty()
 {
-    /* Creates the pointer, allocates the space, and ensures ther head and
+    /* Creates the pointer, allocates the space, and ensures their head and
        tail are null */
     LinkedList* list;
 
@@ -27,7 +27,7 @@ void insertFirst(LinkedList* list,int inPid,int inBurst)
     ListNode* newNode = (ListNode*)malloc(sizeof(ListNode));
 
     newNode->pid=inPid;
-    newNode->burst=inBurst;
+    newNode->burstTime=inBurst;
     if(list->head==NULL)
     {/* If there isnt any bursts, the first is also the last */
         list->head = newNode;
@@ -49,7 +49,7 @@ void insertLast(LinkedList* list,int inPid,int inBurst)
     ListNode* newNode = (ListNode*)malloc(sizeof(ListNode));
 
     newNode->pid=inPid;
-    newNode->burst=inBurst;
+    newNode->burstTime=inBurst;
     if(list->head==NULL)
     {/* If the list is empty, the end is also the start */
         list->head = newNode;
