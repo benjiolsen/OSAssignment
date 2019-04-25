@@ -6,9 +6,15 @@ CC=gcc
 CFLAGS= -Wall -pedantic -ansi -g -c -Werror
 MATH= -lm
 OBJ= linkedlist.o io.o scheduler.o
+GOBJ = generator.o
 OUT= scheduler
+GOUT= generator
 
-default: Scheduler
+default: Scheduler Generator
+Generator: $(GOBJ)
+	$(CC) $(GOBJ) -o $(GOUT)
+$(GOBJ): generator.c
+	$(CC) $(CFLAGS) generator.c
 Scheduler: $(OBJ)
 	$(CC) $(OBJ) -o $(OUT)
 scheduler.o: scheduler.c scheduler.h io.h linkedlist.h
@@ -18,5 +24,5 @@ io.o: io.c io.h linkedlist.h scheduler.h
 linkedlist.o: linkedlist.c linkedlist.h
 	$(CC) $(CFLAGS) linkedlist.c
 clean:
-	rm *.o $(OUT)
+	rm *.o $(OUT) $(GOUT)
 	clear
