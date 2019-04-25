@@ -6,6 +6,7 @@
     #include <stdlib.h>
     #include <unistd.h>
     #include "io.h"
+    #include "linkedlist.h"
 
     struct cpuTask {
     } cpuTask;
