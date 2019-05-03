@@ -9,7 +9,7 @@ Purpose: To act as the file which contains all the functions to manipulate a
 /* Obtained from Benjamin Olsen (me), Previously submitted with the UCP structs
    practical and the UCP 2018 Assignment*/
 #include "linkedlist.h"
-LinkedList* makeEmpty()
+LinkedList* makeEmpty(int inMax)
 {
     /* Creates the pointer, allocates the space, and ensures their head and
        tail are null */
@@ -18,72 +18,61 @@ LinkedList* makeEmpty()
     list = (LinkedList*)malloc(sizeof(LinkedList));
     list->head = NULL;
     list->tail = NULL;
+    list->count = 0;
+    list->max = inMax;
 
     return list;
 }
 
 void insertFirst(LinkedList* list,int inPid,int inBurst)
 {
-    ListNode* newNode = (ListNode*)malloc(sizeof(ListNode));
+    if(list->count!=list->max){
+        ListNode* newNode = (ListNode*)malloc(sizeof(ListNode));
 
-    newNode->pid=inPid;
-    newNode->burstTime=inBurst;
-    if(list->head==NULL)
-    {/* If there isnt any bursts, the first is also the last */
-        list->head = newNode;
-        list->tail = newNode;
-        newNode->next = NULL;
-        newNode->prev = NULL;
-    }
-    else
-    {/* Otherwise, shuffle pointers */
-        newNode->next=list->head;
-        list->head->prev = newNode;
-        newNode->prev=NULL;
-        list->head=newNode;
+        newNode->pid=inPid;
+        newNode->burstTime=inBurst;
+        if(list->head==NULL)
+        {/* If there isnt any nodes, the first is also the last */
+            list->head = newNode;
+            list->tail = newNode;
+            newNode->next = NULL;
+            newNode->prev = NULL;
+            list->count++;
+        }
+        else
+        {/* Otherwise, shuffle pointers */
+            newNode->next=list->head;
+            list->head->prev = newNode;
+            newNode->prev=NULL;
+            list->head=newNode;
+            list->count++;
+        }
     }
 }
 
 void insertLast(LinkedList* list,int inPid,int inBurst)
 {
-    ListNode* newNode = (ListNode*)malloc(sizeof(ListNode));
+    if(list->count!=list->max){
+        ListNode* newNode = (ListNode*)malloc(sizeof(ListNode));
 
-    newNode->pid=inPid;
-    newNode->burstTime=inBurst;
-    if(list->head==NULL)
-    {/* If the list is empty, the end is also the start */
-        list->head = newNode;
-        list->tail = newNode;
-        newNode->next = NULL;
+        newNode->pid=inPid;
+        newNode->burstTime=inBurst;
+        if(list->head==NULL)
+        {/* If the list is empty, the end is also the start */
+            list->head = newNode;
+            list->tail = newNode;
+            newNode->next = NULL;
+            list->count++;
+        }
+        else
+        {/* Otherwise, insert and point to it accordingly */
+            newNode->prev=list->tail;
+            list->tail->next=newNode;
+            list->tail=newNode;
+            newNode->next=NULL;
+            list->count++;
+        }
     }
-    else
-    {/* Otherwise, insert and point to it accordingly */
-        newNode->prev=list->tail;
-        list->tail->next=newNode;
-        list->tail=newNode;
-        newNode->next=NULL;
-    }
-}
-
-int getLength(LinkedList* list)
-{
-    int length = 0;
-    ListNode* cur;
-
-    /* Uses a dummy variable to be able to loop through the list */
-    cur = (list->head);
-    length = lengthRecurse(cur);
-    return length;
-}
-
-int lengthRecurse(ListNode* cur)
-{
-    int length = 0;
-    if(cur!=NULL)
-    {/* Please dont stack overflow <3 */
-        length = 1 + lengthRecurse(cur->next);
-    }
-    return length;
 }
 
 void deleteFirst(LinkedList* list)
@@ -99,6 +88,7 @@ void deleteFirst(LinkedList* list)
         free(list->head);
         list->head=NULL;
         list->tail=NULL;
+        list->count--;
     }
     else
     {/* Otherwise, just remove the head and shuffle it all down */
@@ -107,6 +97,7 @@ void deleteFirst(LinkedList* list)
         list->head=NULL;
         list->head = temp;
         list->head->prev=NULL;
+        list->count--;
     }
 }
 
@@ -122,6 +113,7 @@ void deleteLast(LinkedList* list)
         free(list->head);
         list->head=NULL;
         list->tail=NULL;
+        list->count--;
     }
     else
     {/* Otherwise, remove the tail, and point the tail to the previous */
@@ -130,6 +122,7 @@ void deleteLast(LinkedList* list)
         list->tail=NULL;
         list->tail = temp;
         list->tail->next=NULL;
+        list->count--;
     }
 }
 

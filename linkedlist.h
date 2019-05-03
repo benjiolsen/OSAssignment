@@ -33,15 +33,10 @@ Purpose: To act as the header file for the linked list file. Contains the
     } LinkedList;
 
     /* Creates and returns a pointer to an empty linked list */
-    LinkedList* makeEmpty();
+    LinkedList* makeEmpty(int inMax);
     /* Inserts an item into the front of a linked list, doing the checking and
        possible shuffling needed */
     void insertFirst(LinkedList* list,int inPid,int inBurst);
-    /* Acts to call the lengthRecurse module to recusively get the length of the
-       list by traversing through it */
-    int getLength(LinkedList* list);
-    /* Recusively calls itself to find the length of the list */
-    int lengthRecurse(ListNode* cur);
     /* Deletes the item which is the head of the list, freeing it and removing
        all the pointers to it */
     void deleteFirst(LinkedList* list);
