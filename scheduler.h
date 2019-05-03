@@ -16,10 +16,13 @@ Purpose: To act as the header file for the scheduler c file. Contains the
     #include <string.h>
     #include "io.h"
     #include "linkedlist.h"
-    /* Defines true and false for later use in programs to ensure an error
-       hasn't occured at all */
+
+    /* Defines true and false for later use in the program */
     #define TRUE 0
     #define FALSE !TRUE
+
+    /* Defines the amount of threads. Three cpu() and one task() */
+    #define NUM_THREADS 4
 
     /* Defines the struct cpuTask, so that it can be used to store all the
        information relating to the arrival, waiting, burst time, etc. */
@@ -29,7 +32,7 @@ Purpose: To act as the header file for the scheduler c file. Contains the
 
     /* Acts to start the program by ensuring the user entered the args correctly
        then calls the needed submodules */
-    void start(int,char**);
+    void validate(int,char**);
     /* Simulates the cpu's executing tasks and their critical sections */
     void cpu();
     /* Reads in tasks from the file and places them into the ready queue */
