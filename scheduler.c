@@ -1,40 +1,48 @@
 #include "scheduler.h"
 
-int num_tasks,total_waiting_time,total_turnaround_time;
 LinkedList* ready_queue;
 
-pthread_mutex_t mut;1
-pthread_t thread;
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t condition = PTHREAD_COND_INITIALIZER;
+pthread_t thread_id[NUM_THREADS];
 
 int main(int argv,char** argc){
-    ready_queue = makeList();
+    validate(argv,argc);
+    return 0;
+}
+
+void validate(int argv,char** argc){
     if(argv==3){
-        start(argv,argc);
-    }
+        if(strcmp(argc[1],"task_file\0")==0){
+                if(!((atoi(argc[2])<1)||(atoi(argc[2])>10))){
+                    ready_queue = makeEmpty(atoi(argc[2]));
+                    /* Functionality yet to be implmented */
+                }else{
+                    fprintf(stderr,"Please run as ./scheduler task_file m\n");
+                    fprintf(stderr,"Where m is the maximum size of the ready queue (1-10)\n");
+                }
+        }else{
+            fprintf(stderr,"Please run as ./scheduler task_file m\n");
+            fprintf(stderr,"Where m is the maximum size of the ready queue (1-10)\n");
+        }
     else{
         fprintf(stderr,"Please run as ./scheduler task_file m\n");
         fprintf(stderr,"Where m is the maximum size of the ready queue (1-10)\n");
     }
     freeList(ready_queue);
-    return 0;
 }
-
-void start(int argv,char** argc){
-    if(strcmp(argc[1],"task_file\0")==0){
-            if(!((atoi(argc[2])<1)||(atoi(argc[2])>10))){
-                /* Functionality yet to be implmented */
-            }else{
-                fprintf(stderr,"Please run as ./scheduler task_file m\n");
-                fprintf(stderr,"Where m is the maximum size of the ready queue (1-10)\n");
-            }
-    }else{
-        fprintf(stderr,"Please run as ./scheduler task_file m\n");
-        fprintf(stderr,"Where m is the maximum size of the ready queue (1-10)\n");
+void cpu(void* ptr){
+    pthread_mutex_lock(&mutex);
+    while(isEmpty(ready_queue)){
+        pthread_cond_wait(&condition,&mutex);
     }
-}
-void cpu(){
+    pthread_mutex_unlock(&mutex);
+    return NULL;
 }
 
-void task(){
-
+void task(void* ptr){
+    pthread_mutex_lock(&mutex);
+    pthread_cond_signal(&condition);
+    pthread_mutex_unlock(&mutex);
+    return NULL;
 }
