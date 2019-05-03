@@ -17,7 +17,7 @@ Generator: $(GOBJ)
 $(GOBJ): generator.c
 	$(CC) $(CFLAGS) generator.c
 Scheduler: $(OBJ)
-	$(CC) $(OBJ) -o $(OUT)
+	$(CC) $(OBJ) -pthread -o $(OUT)
 scheduler.o: scheduler.c scheduler.h io.h linkedlist.h
 	$(CC) $(CFLAGS) scheduler.c
 io.o: io.c io.h linkedlist.h scheduler.h
