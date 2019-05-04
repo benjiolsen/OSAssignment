@@ -28,13 +28,22 @@ Purpose: To act as the header file for the scheduler c file. Contains the
        information relating to the arrival, waiting, burst time, etc. */
     typedef struct{
         int placeHolder;
-    } cpuTask;
+    }cpuTask;
+
+    typedef struct{
+        LinkedList* ready_queue;
+        pthread_t thread_id[NUM_THREADS];
+        pthread_mutex_t mutex;
+        pthread_cond_t full;
+        pthread_cond_t empty;
+        int times;
+    }shared;
 
     /* Acts to start the program by ensuring the user entered the args correctly
        then calls the needed submodules */
     void validate(int,char**);
     /* Simulates the cpu's executing tasks and their critical sections */
-    void cpu();
+    void* cpu(void* vshare);
     /* Reads in tasks from the file and places them into the ready queue */
-    void task();
+    void* task(void* vshare);
 #endif
