@@ -18,8 +18,8 @@ Purpose: To act as the header file for the scheduler c file. Contains the
     #include "linkedlist.h"
 
     /* Defines true and false for later use in the program */
-    #define TRUE 0
-    #define FALSE !TRUE
+    #define FALSE 0
+    #define TRUE !FALSE
 
     /* Defines the amount of threads. Three cpu() and one task() */
     #define NUM_THREADS 4
@@ -36,7 +36,8 @@ Purpose: To act as the header file for the scheduler c file. Contains the
         pthread_mutex_t mutex;
         pthread_cond_t full;
         pthread_cond_t empty;
-        int times;
+        int max;
+        int flag;
     }shared;
 
     /* Acts to start the program by ensuring the user entered the args correctly
