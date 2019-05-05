@@ -1,0 +1,26 @@
+\documentclass{article}
+\usepackage{amsmath}
+\title{COMP 2006 Operating Systems Assignment Semester 1 2019}
+\date{05/05/2019}
+\author{Benjamin Olsen}
+
+\begin{document}
+  \pagenumbering{gobble}
+  \maketitle
+  \newpage
+  \doublespacing
+  \tableofcontents
+  \singlespacing
+  \newpage
+  \pagenumbering{arabic}
+
+  \section{Mutual Exclusion}
+    \subsection{Mutexes}
+        The use of mutex variables, from the POSIX Threads library, allowed me to solve the mutual exclusion problem.
+        From the pthread library, creating a variable of type pthread\_mutex\_t, allowed the use of the functions to lock and unlock the mutex.
+        This allows for blocking of other threads entering their critical section, as the lock function will only execute if the mutex variable is unlocked.
+        Once the thread who has obtained the lock exits their critical section, it calls the unlock function to release the lock for other threads to be able to gain access to their critical section.
+        In my program, both the functions/threads for cpu() and task() call to establish locks on the mutex variable "mutex". This ensures that the data being created in the task() function is not edited in the cpu() function if a context switch were to occur at any point.
+    \subsection{Condition Varibles}
+      In the POSIX Threads library, the "wait" and "signal" functions exist for condition varibles. The wait call allows the thread to spinlock until the corresponding signal call allows it to exit the lock, and continue with the execution. The use in my program lies in the use of the ready queue. When the ready queue is full, the task function will spinlock until the cpu function calls for it to complete its execution with the corresponding signal call.
+\end{document}
