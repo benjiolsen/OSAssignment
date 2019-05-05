@@ -51,15 +51,29 @@ void* cpu(void* vshare){
     pthread_t temp;
     int ii = 0;
     shared* share;
-    printf("CPU First!\n");
     temp = pthread_self();
     share = (shared*)vshare;
     while(!(share->ready_queue->count==0)||share->flag==0){
         pthread_mutex_lock(&(share->mutex));
-        if(!(share->ready_queue->count==0)){
+        while(share->ready_queue->count==0&&share->flag==0){
+            pthread_cond_wait(&(share->full),&(share->mutex));
+        }
+        if(share->ready_queue->count>0){
             pid = share->ready_queue->head->pid;
             burst = share->ready_queue->head->burstTime;
-            sleep(burst/100);
+            sleep(burst/1000);
+            for(ii=1;ii<NUM_THREADS;ii++){
+                if(temp==share->thread_id[ii]){
+                    printf("CPU #%d executed task #%d for: %ds\n",ii,pid,burst);
+                }
+            }
+            deleteFirst(share->ready_queue);
+        }
+        pthread_cond_signal(&(share->empty));
+        /*if(!(share->ready_queue->count==0)){
+            pid = share->ready_queue->head->pid;
+            burst = share->ready_queue->head->burstTime;
+            sleep(burst/1000);
             for(ii=1;ii<NUM_THREADS;ii++){
                 if(temp==share->thread_id[ii]){
                     printf("CPU #%d executed task #%d for: %ds\n",ii,pid,burst);
@@ -67,17 +81,15 @@ void* cpu(void* vshare){
             }
             deleteFirst(share->ready_queue);
             pthread_cond_signal(&(share->empty));
-        }
+        }*/
         pthread_mutex_unlock(&(share->mutex));
     }
-    printf("Ended with %d items in the queue\n",share->ready_queue->count);
     return NULL;
 }
 
 void* task(void* vshare){
     LinkedList* fileList;
     shared* share;
-    printf("Task First!\n");
     share = (shared*)vshare;
     fileList = makeEmpty(100);
     readLines(fileList,"task_file");
@@ -102,6 +114,7 @@ void* task(void* vshare){
             pthread_cond_signal(&(share->full));
         }else if(fileList->count==0){
             share->flag=1;
+            pthread_cond_signal(&(share->full));
         }
         pthread_mutex_unlock(&(share->mutex));
     }
