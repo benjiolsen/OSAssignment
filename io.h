@@ -15,5 +15,5 @@ Purpose: To act as the header file for the io c file. Contains the all the
     /* Defines the buffer used for fgets when reading from the file */
     #define BUFFER_SIZE 1024
     /* Reads in the lines from the specified file, into a linked list */
-    int readlines(LinkedList* list,char* filename);
+    int readLines(LinkedList* list,char* filename);
 #endif
