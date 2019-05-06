@@ -23,7 +23,7 @@ void validate(int argv,char** argc){
     if(argv==3){
         /* ensure that there are 2 arguments alongside the running of the
            program */
-        if(strcmp(argc[1],"task_file\0")==0){            }
+        if(strcmp(argc[1],"task_file\0")==0){            
             /* Ensures that the second argument is the task file */
             if(!((atoi(argc[2])<1)||(atoi(argc[2])>10))){
                 /* Ensures the next argument is in the correct range */
