@@ -6,7 +6,7 @@ Purpose: To act as the file which contains all the functions to act as a cpu
          is a FIFO scheduler which acts to executes the tasks in the order
          they are recieved
 */
-
+#include "scheduler.h"
 int main(int argv,char** argc){
     /* Calls validate to validate and start the program */
     validate(argv,argc);
