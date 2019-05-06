@@ -1,5 +1,13 @@
+/*
+Created by: Benjamin Olsen
+Student Number: 19481681
+Purpose: To act as the file which contains all the functions to manipulate a
+         file. Using linked lists, and reading directly into the pid and burst
+         variables
+*/
+/* Modified version from obtained from Benjamin Olsen (me), Previously
+   submitted with the UCP structs practical and the UCP 2018 Assignment*/
 #include "io.h"
-
 int readLines(LinkedList* list,char* filename)
 {
     FILE* taskFile = NULL;

@@ -1,8 +1,14 @@
+/*
+Created by: Benjamin Olsen
+Student Number: 19481681
+Purpose: To act as a quick and dirty task file generator for the 2019
+         Operating Systems assignment.
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 int main(void){
-    
+
     FILE* taskFile = NULL;
     char outString[25];
     int num,burstTime;
