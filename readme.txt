@@ -19,3 +19,6 @@ RUNNING:
     As per the assignment specifications, it must be run in the format;
         './scheduler task_file m'
     where m is a number between 1 and 10, inclusive.
+    
+DISCLAMER:
+    There are known issues and bugs in this software, as it was not completed to the assignment specifications in the due time.
